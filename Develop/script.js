@@ -2,7 +2,7 @@
 var lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "j", "k"
   , "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-var upercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 var numeric = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -13,25 +13,24 @@ var specialCharacter = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", "
 function passwordCriteria() {
   var length = prompt("How long would you like your password to be? Must be a minumum of 8 characters and a maxiumum of 128 characters.");
   //check if longer than 8 and less than 128
-  if (length < 8) {
-    alert("Must be at least 8");
-    return;
-  }
-
-  if (length > 128) {
-    alert("Must be no more than 128");
-    return;
+  if (length >= 8 && length <=128) {
+    alert("Great choice!");
+  
+  } else {
+    alert("Please choose a number between 8 and 128");
+  
   }
 
   //when click save numbers, want pool or number array to join the array that will hold all of the password options
   var hasNumericCharacters = confirm("click OK if you would like to inlcude numbers");
-
-
   var hasLowerCasedCharacters = confirm("Click OK if you would like to include lower case letters");
-
   var hasUpperCasedCharacters = confirm("Click OK if you would like to include upper case letters");
-
   var hasSpecialCharacters = confirm("Click OK if you would like to include special characters");
+
+  hasSpecialCharacters;
+  hasNumericCharacters;
+  hasLowerCasedCharacters;
+  hasUpperCasedCharacters;
 
   var passwordOptions = {
     length: length,
@@ -42,13 +41,19 @@ function passwordCriteria() {
   };
 
   return passwordOptions;
+
+  console.log(passwordOptions);
 }
+
+
 
 function getRandom(arr) {
   var randIndex = Math.floor(Math.random() * arr.length);
   var randElement = arr[randIndex];
   return randElement;
 }
+
+
 
 //function that geneartes a password, needs options, a result, possible characters to chose from all possible, 
 function generatePassword() {
@@ -62,20 +67,23 @@ function generatePassword() {
   var guaranteedCharacters = []
   // if hasNumbers is true  add numbers array to possible Charcters array
   
-  if (passwordOptions.hasNumberCharacters) {
+  if (passwordOptions.hasNumericCharacters) {
     //take numbers array and concat into characterBank
-     characterBank.push(numbers);
+     characterBank.push(numeric);
   //get random character
     
   //then add a random character to gauranteedCharacters
-    guaranteedCharacters.push(getRandom(numbers));
+    guaranteedCharacters.push(getRandom(numeric));
     }
-  //create more if statements for each options
+  // if hasSpecialCharacters is true  add numbers array to possible Charcters array
+    //then add a random character to gauranteedCharacters
   if (passwordOptions.hasSpecialCharacters) {
     characterBank.push(specialCharacter);
     guaranteedCharacters.push(getRandom(specialCharacter));
   }
   
+    // if hasLOwerCase is true  add numbers array to possible Charcters array
+    //then add a random character to gauranteedCharacters
   if (passwordOptions.hasLowerCasedCharacters) {
     characterBank.push(lowercase);
     guaranteedCharacters.push(getRandom(lowercase));
@@ -85,17 +93,11 @@ function generatePassword() {
     characterBank.push(uppercase);
     guaranteedCharacters.push(getRandom(uppercase));
   }
+console.log(characterBank)
 
   // getRandom(specialCharacter);
 
-  // if hasLOwerCase is true  add numbers array to possible Charcters array
-    //then add a random character to gauranteedCharacters
-
-  // if hasSpecialCharacters is true  add numbers array to possible Charcters array
-    //then add a random character to gauranteedCharacters
-
-  // possibleCharaters = [1,2,3,H,K,L,%,$,*]
-  // until finalpassword.length = options.length
+  // create a loop where until finalpassword.length = options.length
       // pick a random charcters from possibleCharcters array
   }
 
