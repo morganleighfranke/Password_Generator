@@ -90,9 +90,9 @@ function generatePassword() {
 
   
   for (var i = 0; i < guaranteedCharacters.length; i++) {
-    var characterBank = getRandom(characterBank);
+    var possibleCharacters = getRandom(characterBank);
 
-    finalPassword.push(characterBank);
+    finalPassword.push(possibleCharacters);
   }
 
   for (var i = 0; i < guaranteedCharacters.length; i++) {
@@ -102,7 +102,6 @@ function generatePassword() {
   return finalPassword.join('');
 }
 
-console.log(generatePassword());
 // Generate element
 var generateBtn = document.querySelector("#generate");
 
