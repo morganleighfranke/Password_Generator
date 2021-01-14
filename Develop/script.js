@@ -4,7 +4,7 @@ var lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "j", "k"
 
 var uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-var numeric = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+var numeric = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 var specialCharacter = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "{", "}", "[", "]", "|", ":", ";", "'", "<", ",", ">", ".", "?", "/", "\\", "\""];
 
@@ -13,24 +13,22 @@ var specialCharacter = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", "
 function passwordCriteria() {
   var length = prompt("How long would you like your password to be? Must be a minumum of 8 characters and a maxiumum of 128 characters.");
   //check if longer than 8 and less than 128
-  if (length >= 8 && length <=128) {
-    alert("Great choice!");
+  if (length < 8) {
+    alert("Password must be at least 8 characters long");
+    return;
+  } 
   
-  } else {
-    alert("Please choose a number between 8 and 128");
-  
+  if (length > 128) {
+    alert("Password must be no more than 128 characters long");
+    return;
   }
 
-  //when click save numbers, want pool or number array to join the array that will hold all of the password options
+
+  //when click save numbers, want pool or number array to join the array that will hold all of the storeValues options
   var hasNumericCharacters = confirm("click OK if you would like to inlcude numbers");
   var hasLowerCasedCharacters = confirm("Click OK if you would like to include lower case letters");
   var hasUpperCasedCharacters = confirm("Click OK if you would like to include upper case letters");
   var hasSpecialCharacters = confirm("Click OK if you would like to include special characters");
-
-  hasSpecialCharacters;
-  hasNumericCharacters;
-  hasLowerCasedCharacters;
-  hasUpperCasedCharacters;
 
   var passwordOptions = {
     length: length,
@@ -42,10 +40,7 @@ function passwordCriteria() {
 
   return passwordOptions;
 
-  console.log(passwordOptions);
 }
-
-
 
 function getRandom(arr) {
   var randIndex = Math.floor(Math.random() * arr.length);
@@ -54,22 +49,21 @@ function getRandom(arr) {
 }
 
 
-
-//function that geneartes a password, needs options, a result, possible characters to chose from all possible, 
+//function that geneartes a storeValues, needs options, a result, possible characters to chose from all possible, 
 function generatePassword() {
   //pasword Options stores values 
-  var passwordOptions = passwordCriteria();
+  var storeValues = passwordCriteria();
 //container
-  var finalPassword = ""
+  var finalPassword = [];
   //inside array, if hasHasNumbers = true, then concat number array to characterBank, 
   //container 
   var characterBank = [];
   var guaranteedCharacters = []
   // if hasNumbers is true  add numbers array to possible Charcters array
   
-  if (passwordOptions.hasNumericCharacters) {
+  if  (storeValues.hasNumericCharacters) {
     //take numbers array and concat into characterBank
-     characterBank.push(numeric);
+     characterBank = characterBank.concat(numeric);
   //get random character
     
   //then add a random character to gauranteedCharacters
@@ -77,46 +71,43 @@ function generatePassword() {
     }
   // if hasSpecialCharacters is true  add numbers array to possible Charcters array
     //then add a random character to gauranteedCharacters
-  if (passwordOptions.hasSpecialCharacters) {
-    characterBank.push(specialCharacter);
+  if  (storeValues.hasSpecialCharacters) {
+    characterBank = characterBank.concat(specialCharacter);
     guaranteedCharacters.push(getRandom(specialCharacter));
   }
   
     // if hasLOwerCase is true  add numbers array to possible Charcters array
     //then add a random character to gauranteedCharacters
-  if (passwordOptions.hasLowerCasedCharacters) {
-    characterBank.push(lowercase);
+  if  (storeValues.hasLowerCasedCharacters) {
+    characterBank = characterBank.concat(lowercase);
     guaranteedCharacters.push(getRandom(lowercase));
   }
 
-  if (passwordOptions.hasUpperCasedCharacters) {
-    characterBank.push(uppercase);
+  if  (storeValues.hasUpperCasedCharacters) {
+    characterBank = characterBank.concat(uppercase);
     guaranteedCharacters.push(getRandom(uppercase));
   }
-console.log(characterBank)
 
-  // getRandom(specialCharacter);
+  
+  for (var i = 0; i < guaranteedCharacters.length; i++) {
+    var characterBank = getRandom(characterBank);
 
-  // create a loop where until finalpassword.length = options.length
-      // pick a random charcters from possibleCharcters array
+    finalPassword.push(characterBank);
   }
 
+  for (var i = 0; i < guaranteedCharacters.length; i++) {
+    finalPassword[i] = guaranteedCharacters[i];
+  }
 
+  return finalPassword.join('');
+}
 
-
-
-//use passwordOptions to create a new function 
-
-//event listeners
-
-//log -- call function, setup listeners, act on them
-
-
+console.log(generatePassword());
 // Generate element
 var generateBtn = document.querySelector("#generate");
 
 
-// Write password to the #password input
+// Write storeValues to the #storeValues input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
