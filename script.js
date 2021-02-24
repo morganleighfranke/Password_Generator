@@ -11,8 +11,14 @@ var specialCharacter = ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", "
 
 //functions
 function passwordCriteria() {
-  var length = prompt("How long would you like your password to be? Must be a minumum of 8 characters and a maxiumum of 128 characters.");
+  var length = parseInt(prompt("How long would you like your password to be? Must be a minumum of 8 characters and a maxiumum of 128 characters."));
   //check if longer than 8 and less than 128
+
+  if(isNaN(length)=== true){
+    alert('You must enter a number');
+    return;
+  }
+
   if (length < 8) {
     alert("Password must be at least 8 characters long");
     return;
@@ -29,6 +35,16 @@ function passwordCriteria() {
   var hasLowerCasedCharacters = confirm("Click OK if you would like to include lower case letters");
   var hasUpperCasedCharacters = confirm("Click OK if you would like to include upper case letters");
   var hasSpecialCharacters = confirm("Click OK if you would like to include special characters");
+
+  if (
+    hasNumericCharacters === false &&
+    hasSpecialCharacters === false &&
+    hasUpperCasedCharacters === false &&
+    hasLowerCasedCharacters === false
+  ) {
+    alert("must select at least one character type");
+    return;
+  }
 
   var passwordOptions = {
     length: length,
@@ -89,7 +105,7 @@ function generatePassword() {
   }
 
   
-  for (var i = 0; i < guaranteedCharacters.length; i++) {
+  for (var i = 0; i < storeValues.length; i++) {
     var possibleCharacters = getRandom(characterBank);
 
     finalPassword.push(possibleCharacters);
